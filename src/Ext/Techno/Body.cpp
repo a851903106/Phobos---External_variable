@@ -6,9 +6,7 @@ TechnoExt::ExtContainer TechnoExt::ExtMap;
 void TechnoExt::ExtData::DeleteSelf()
 {
 	const auto pThis = this->OwnerObject();
-	const auto pHouse = HouseClass::FindSpecial();
 
-	pThis->SetOwningHouse(pHouse);
 	pThis->Limbo();
 	pThis->UnInit();
 }

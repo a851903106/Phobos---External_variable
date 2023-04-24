@@ -47,7 +47,18 @@ DEFINE_HOOK(0x6F9E50, TechnoClass_AI, 0x5)
 					{
 						pINI->ReadCCFile(cfg);
 
-						pINI->WriteString(pTypeExt->VartoExVar_Section, pTypeExt->VartoExVar_Key, pTypeExt->VartoExVar_Value);
+						if(pTypeExt->VartoExVar_IsInt.Get())
+						{
+							int number = pINI->ReadInteger(pTypeExt->VartoExVar_Section, pTypeExt->VartoExVar_Key, 0);
+
+							number += pTypeExt->VartoExVar_Number;
+							pINI->WriteInteger(pTypeExt->VartoExVar_Section, pTypeExt->VartoExVar_Key, number, false);
+						}
+						else
+						{
+							pINI->WriteString(pTypeExt->VartoExVar_Section, pTypeExt->VartoExVar_Key, pTypeExt->VartoExVar_Value);
+						}
+
 						pINI->WriteCCFile(cfg);
 					}
 

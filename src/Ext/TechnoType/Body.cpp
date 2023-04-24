@@ -46,6 +46,8 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 	this->VartoExVar_Section.Read(pINI, pSection, "VartoExVar.Section");
 	this->VartoExVar_Key.Read(pINI, pSection, "VartoExVar.Key");
 	this->VartoExVar_Value.Read(pINI, pSection, "VartoExVar.Value");
+	this->VartoExVar_IsInt.Read(exINI, pSection, "VartoExVar.IsInt");
+	this->VartoExVar_Number.Read(exINI, pSection, "VartoExVar.Number");
 }
 
 template <typename T>
@@ -63,6 +65,8 @@ void TechnoTypeExt::ExtData::Serialize(T& Stm)
 		.Process(this->VartoExVar_Section)
 		.Process(this->VartoExVar_Key)
 		.Process(this->VartoExVar_Value)
+		.Process(this->VartoExVar_IsInt)
+		.Process(this->VartoExVar_Number)
 		;
 }
 void TechnoTypeExt::ExtData::LoadFromStream(PhobosStreamReader& Stm)

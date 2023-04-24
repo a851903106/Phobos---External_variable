@@ -1,4 +1,3 @@
-
 [TechnoType]>ExVartoVar= (boolean)
 是否读取外部变量，只能读取数字，默认no。
 
@@ -40,6 +39,12 @@ ExVartoVar.SW1=IronCurtainSpecial
 
 [TechnoType]>VartoExVar.Value= (string)
 写入外部变量的字段。
+
+[TechnoType]>VartoExVar.IsInt= (boolean)
+写入外部变量的字段是否是数字，默认no。
+
+[TechnoType]>VartoExVar..Number= (integer)
+那么外部变量的值会和这个数值相加，默认0。
 
 
 ---------------------------------------------------------------------------------

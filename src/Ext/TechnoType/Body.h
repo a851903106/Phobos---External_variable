@@ -27,6 +27,8 @@ public:
 		PhobosFixedString<32U> VartoExVar_Section;
 		PhobosFixedString<32U> VartoExVar_Key;
 		PhobosFixedString<32U> VartoExVar_Value;
+		Valueable<bool> VartoExVar_IsInt;
+		Valueable<int> VartoExVar_Number;
 
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject)
 			, ExVartoVar { false }
@@ -40,6 +42,8 @@ public:
 			, VartoExVar_Section { nullptr }
 			, VartoExVar_Key { nullptr }
 			, VartoExVar_Value { nullptr }
+			, VartoExVar_IsInt { false }
+			, VartoExVar_Number { 0 }
 		{ }
 
 		virtual ~ExtData() = default;
