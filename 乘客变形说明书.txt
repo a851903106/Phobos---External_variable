@@ -1,0 +1,16 @@
+
+[UnitType]>UseConvert= (boolean)
+是否启用乘客变形逻辑。
+
+[UnitType]>Convert.Load= (UnitType)
+拥有乘客时会变成什么载具，不写则不启用。
+
+[UnitType]>Convert.Unload= (UnitType)
+没有乘客时会变成什么载具，不写则不启用。
+
+[UnitType]>Convert.LoadX= (List of TechnoType)
+拥有这些乘客时启用变形逻辑，会屏蔽Convert.Load，不写则不启用。
+
+[UnitType]>Convert.TypeX= (UnitType)
+拥有上述乘客时会变成什么载具，和上面的对应，无法对应则不启用。
+

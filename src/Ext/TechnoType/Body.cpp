@@ -21,14 +21,50 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 
 	INI_EX exINI(pINI);
 
+	this->UseConvert.Read(exINI, pSection, "UseConvert");
+
+	if (pThis->WhatAmI() == AbstractType::UnitType && this->UseConvert.Get())
+	{
+		this->Convert_Load.Read(exINI, pSection, "Convert.Load", true);
+		this->Convert_Unload.Read(exINI, pSection, "Convert.Unload", true);
+
+		for (int i = 0;; i++)
+		{
+			char text[64];
+			NullableVector<TechnoTypeClass*> Types;
+
+			sprintf_s(text, sizeof(text), "Convert.Load%d", i + 1);
+			Types.Read(exINI, pSection, text);
+
+			if (Types.empty())
+				break;
+			else
+				this->Convert_Loads.push_back(Types);
+
+			Nullable<UnitTypeClass*> Type;
+			sprintf_s(text, sizeof(text), "Convert.Type%d", i + 1);
+			Type.Read(exINI, pSection, text, true);
+
+			if (!Type.Get())
+				break;
+			else
+				this->Convert_Types.push_back(Type);
+		}
+	}
 }
 
 template <typename T>
 void TechnoTypeExt::ExtData::Serialize(T& Stm)
 {
 	Stm
+		.Process(this->UseConvert)
+		.Process(this->Convert_Load)
+		.Process(this->Convert_Unload)
+		.Process(this->Convert_Loads)
+		.Process(this->Convert_Types)
 		;
 }
+
 void TechnoTypeExt::ExtData::LoadFromStream(PhobosStreamReader& Stm)
 {
 	Extension<TechnoTypeClass>::LoadFromStream(Stm);

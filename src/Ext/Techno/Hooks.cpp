@@ -15,5 +15,25 @@ DEFINE_HOOK(0x6F9E50, TechnoClass_AI, 0x5)
 	if (!pExt->TypeExtData || pExt->TypeExtData->OwnerObject() != pType)
 		pExt->TypeExtData = TechnoTypeExt::ExtMap.Find(pThis->GetTechnoType());
 
+	if (!pThis || !pType || !pExt || !pExt->TypeExtData)
+		return 0;
+
+	if (pType->Passengers > 0 && pExt->TypeExtData->UseConvert.Get())
+	{
+		if (pExt->PassengerNum != pThis->Passengers.NumPassengers)
+		{
+			pExt->PassengerNum = pThis->Passengers.NumPassengers;
+
+			if (pExt->PassengerNum >= 1)
+			{
+				pExt->LoadConvert();
+			}
+			else
+			{
+				pExt->UnloadConvert();
+			}
+		}
+	}
+
 	return 0;
 }

@@ -21,10 +21,15 @@ public:
 	{
 	public:
 		TechnoTypeExt::ExtData* TypeExtData;
+		int PassengerNum;
 
 		ExtData(TechnoClass* OwnerObject) : Extension<TechnoClass>(OwnerObject)
 			, TypeExtData { nullptr }
+			, PassengerNum { 0 }
 		{ }
+
+		void LoadConvert();
+		void UnloadConvert();
 
 		virtual ~ExtData() = default;
 
@@ -51,4 +56,8 @@ public:
 
 	static bool LoadGlobals(PhobosStreamReader& Stm);
 	static bool SaveGlobals(PhobosStreamWriter& Stm);
+
+	static bool ConvertToType(FootClass* pThis, TechnoTypeClass* toType);
+	static void CheckWeapons(FootClass* pThis);
+	static void CheckWeapon(FootClass* pThis, WeaponTypeClass* pWeapon);
 };

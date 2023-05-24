@@ -16,7 +16,18 @@ public:
 	class ExtData final : public Extension<TechnoTypeClass>
 	{
 	public:
+		Valueable<bool> UseConvert;
+		Nullable<UnitTypeClass*> Convert_Load;
+		Nullable<UnitTypeClass*> Convert_Unload;
+		std::vector<NullableVector<TechnoTypeClass*>> Convert_Loads;
+		std::vector<UnitTypeClass*> Convert_Types;
+
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject)
+			, UseConvert { false }
+			, Convert_Load {}
+			, Convert_Unload {}
+			, Convert_Loads {}
+			, Convert_Types {}
 		{ }
 
 		virtual ~ExtData() = default;
