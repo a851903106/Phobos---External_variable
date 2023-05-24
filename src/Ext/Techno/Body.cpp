@@ -181,37 +181,32 @@ bool TechnoExt::ConvertToType(FootClass* pThis, TechnoTypeClass* pToType)
 	if (pToType->BalloonHover && pToType->DeployToLand && prevType->Locomotor != jjLoco && toLoco == jjLoco)
 		pThis->Locomotor->Move_To(pThis->Location);
 
+	TechnoExt::CheckWeapons(pThis, pToType);
+
 	return true;
 }
 
-void TechnoExt::CheckWeapons(FootClass* pThis)
+void TechnoExt::CheckWeapons(FootClass* pThis, TechnoTypeClass* pType)
 {
-	const auto pType = pThis->GetTechnoType();
+	if (const auto pWeaponType = pType->GetWeapon(0, false).WeaponType)
+		TechnoExt::CheckWeapon(pThis, pWeaponType);
 
-	if ((!pType->Gunner || pType->TurretCount <= 0) && !pType->IsGattling && !pType->ChargerTurrets)
+	if (const auto pWeaponType = pType->GetWeapon(0, true).WeaponType)
+		TechnoExt::CheckWeapon(pThis, pWeaponType);
+
+	if (const auto pWeaponType = pType->GetWeapon(1, false).WeaponType)
+		TechnoExt::CheckWeapon(pThis, pWeaponType);
+
+	if (const auto pWeaponType = pType->GetWeapon(1, true).WeaponType)
+		TechnoExt::CheckWeapon(pThis, pWeaponType);
+
+	for (int i = 0; i < pType->WeaponCount; i++)
 	{
-		if (const auto pWeaponType = pType->GetWeapon(0, false).WeaponType)
+		if (const auto pWeaponType = pType->GetWeapon(i, false).WeaponType)
 			TechnoExt::CheckWeapon(pThis, pWeaponType);
 
-		if (const auto pWeaponType = pType->GetWeapon(0, true).WeaponType)
+		if (const auto pWeaponType = pType->GetWeapon(i, true).WeaponType)
 			TechnoExt::CheckWeapon(pThis, pWeaponType);
-
-		if (const auto pWeaponType = pType->GetWeapon(1, false).WeaponType)
-			TechnoExt::CheckWeapon(pThis, pWeaponType);
-
-		if (const auto pWeaponType = pType->GetWeapon(1, true).WeaponType)
-			TechnoExt::CheckWeapon(pThis, pWeaponType);
-	}
-	else
-	{
-		for (int i = 0; i < pType->WeaponCount; i++)
-		{
-			if (const auto pWeaponType = pType->GetWeapon(i, false).WeaponType)
-				TechnoExt::CheckWeapon(pThis, pWeaponType);
-
-			if (const auto pWeaponType = pType->GetWeapon(i, true).WeaponType)
-				TechnoExt::CheckWeapon(pThis, pWeaponType);
-		}
 	}
 }
 

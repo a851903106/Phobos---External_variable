@@ -58,6 +58,6 @@ public:
 	static bool SaveGlobals(PhobosStreamWriter& Stm);
 
 	static bool ConvertToType(FootClass* pThis, TechnoTypeClass* toType);
-	static void CheckWeapons(FootClass* pThis);
+	static void CheckWeapons(FootClass* pThis, TechnoTypeClass* pType);
 	static void CheckWeapon(FootClass* pThis, WeaponTypeClass* pWeapon);
 };
