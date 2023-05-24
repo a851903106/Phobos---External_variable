@@ -8,6 +8,32 @@ TechnoTypeExt::ExtContainer TechnoTypeExt::ExtMap;
 
 void TechnoTypeExt::ExtData::Initialize() { }
 
+void TechnoTypeExt::GetWeapons(TechnoTypeClass* pThis, INI_EX& exINI, const char* pSection,
+	std::vector<WeaponTypeClass*>& n, std::vector<WeaponTypeClass*>& nE)
+{
+	char tempBuffer[32];
+	auto weaponCount = pThis->WeaponCount;
+	if (weaponCount <= 0)
+		return;
+
+	for (int i = 0; i < weaponCount; i++)
+	{
+		_snprintf_s(tempBuffer, sizeof(tempBuffer), "Weapon%d", i + 1);
+		Nullable<WeaponTypeClass*> Weapon;
+		Weapon.Read(exINI, pSection, tempBuffer, true);
+
+		_snprintf_s(tempBuffer, sizeof(tempBuffer), "EliteWeapon%d", i + 1);
+		Nullable<WeaponTypeClass*> EliteWeapon;
+		EliteWeapon.Read(exINI, pSection, tempBuffer, true);
+
+		if (!EliteWeapon.isset())
+			EliteWeapon = Weapon;
+
+		n.push_back(Weapon.Get());
+		nE.push_back(EliteWeapon.Get());
+	}
+}
+
 // =============================
 // load / save
 
@@ -20,6 +46,8 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 		return;
 
 	INI_EX exINI(pINI);
+
+	TechnoTypeExt::GetWeapons(pThis, exINI, pSection, this->Weapons, this->EliteWeapons);
 
 	this->UseConvert.Read(exINI, pSection, "UseConvert");
 

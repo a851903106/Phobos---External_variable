@@ -188,6 +188,8 @@ bool TechnoExt::ConvertToType(FootClass* pThis, TechnoTypeClass* pToType)
 
 void TechnoExt::CheckWeapons(FootClass* pThis, TechnoTypeClass* pType)
 {
+	const auto pTypeExt = TechnoTypeExt::ExtMap.Find(pType);
+
 	if (const auto pWeaponType = pType->GetWeapon(0, false).WeaponType)
 		TechnoExt::CheckWeapon(pThis, pWeaponType);
 
@@ -200,14 +202,11 @@ void TechnoExt::CheckWeapons(FootClass* pThis, TechnoTypeClass* pType)
 	if (const auto pWeaponType = pType->GetWeapon(1, true).WeaponType)
 		TechnoExt::CheckWeapon(pThis, pWeaponType);
 
-	for (int i = 0; i < pType->WeaponCount; i++)
-	{
-		if (const auto pWeaponType = pType->GetWeapon(i, false).WeaponType)
-			TechnoExt::CheckWeapon(pThis, pWeaponType);
+	for(const auto pWeaponType : pTypeExt->Weapons)
+		TechnoExt::CheckWeapon(pThis, pWeaponType);
 
-		if (const auto pWeaponType = pType->GetWeapon(i, true).WeaponType)
-			TechnoExt::CheckWeapon(pThis, pWeaponType);
-	}
+	for (const auto pWeaponType : pTypeExt->EliteWeapons)
+		TechnoExt::CheckWeapon(pThis, pWeaponType);
 }
 
 void TechnoExt::CheckWeapon(FootClass* pThis, WeaponTypeClass* pWeapon)

@@ -22,12 +22,18 @@ public:
 		std::vector<NullableVector<TechnoTypeClass*>> Convert_Loads;
 		std::vector<UnitTypeClass*> Convert_Types;
 
+		std::vector<WeaponTypeClass*> Weapons;
+		std::vector<WeaponTypeClass*> EliteWeapons;
+
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject)
 			, UseConvert { false }
 			, Convert_Load {}
 			, Convert_Unload {}
 			, Convert_Loads {}
 			, Convert_Types {}
+
+			, Weapons {}
+			, EliteWeapons {}
 		{ }
 
 		virtual ~ExtData() = default;
@@ -52,4 +58,6 @@ public:
 	};
 
 	static ExtContainer ExtMap;
+
+	static void GetWeapons(TechnoTypeClass* pThis, INI_EX& exINI, const char* pSection, std::vector<WeaponTypeClass*>& n, std::vector<WeaponTypeClass*>& nE);
 };
