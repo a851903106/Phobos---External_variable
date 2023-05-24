@@ -18,9 +18,9 @@ DEFINE_HOOK(0x6F9E50, TechnoClass_AI, 0x5)
 	if (!pThis || !pType || !pExt || !pExt->TypeExtData)
 		return 0;
 
-	if (pType->Passengers > 0 && pExt->TypeExtData->UseConvert.Get())
+	if (pExt->TypeExtData->UseConvert.Get())
 	{
-		if (pExt->PassengerNum != pThis->Passengers.NumPassengers)
+		if (pType->Passengers > 0 && pExt->PassengerNum != pThis->Passengers.NumPassengers)
 		{
 			pExt->PassengerNum = pThis->Passengers.NumPassengers;
 

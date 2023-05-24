@@ -56,8 +56,16 @@ void TechnoExt::ExtData::LoadConvert()
 
 		if (TechnoExt::ConvertToType(abstract_cast<FootClass*>(pThis), type))
 		{
+			pPassenger->Transporter = pThis;
+
 			if (type->Gunner)
 				abstract_cast<FootClass*>(pThis)->ReceiveGunner(pPassenger);
+
+			if (type->OpenTopped)
+			{
+				abstract_cast<TechnoClass*>(pPassenger)->InOpenToppedTransport = true;
+				pThis->EnteredOpenTopped(abstract_cast<TechnoClass*>(pPassenger));
+			}
 		}
 	}
 }

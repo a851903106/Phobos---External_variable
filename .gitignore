@@ -22,3 +22,4 @@ docs/locale/.doctrees/
 /.vscode/cspell.json
 /.vscode/settings.json
 /Variable.dll
+/src/Ext/TechnoType/Body.cpp
