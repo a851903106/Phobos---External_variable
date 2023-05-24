@@ -21,52 +21,12 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 
 	INI_EX exINI(pINI);
 
-	this->ExVartoVar.Read(exINI, pSection, "ExVartoVar");
-	this->ExVartoVar_File.Read(pINI, pSection, "ExVartoVar.File");
-	this->ExVartoVar_Section.Read(pINI, pSection, "ExVartoVar.Section");
-	this->ExVartoVar_Key.Read(pINI, pSection, "ExVartoVar.Key");
-
-	for (size_t i = 0; ; ++i)
-	{
-		char type[64];
-		_snprintf_s(type, sizeof(type), "ExVartoVar.SW%d", i);
-
-		PhobosFixedString<32U> SWtype;
-		SWtype.Read(pINI, pSection, type);
-
-		if (strcmp(SWtype.data(), "") == 0)
-			break;
-
-		int SWIdx = SuperWeaponTypeClass::FindIndex(SWtype);
-		this->ExVartoVar_SW.push_back(SuperWeaponTypeClass::Array()->GetItem(SWIdx));
-	}
-
-	this->VartoExVar.Read(exINI, pSection, "VartoExVar");
-	this->VartoExVar_File.Read(pINI, pSection, "VartoExVar.File");
-	this->VartoExVar_Section.Read(pINI, pSection, "VartoExVar.Section");
-	this->VartoExVar_Key.Read(pINI, pSection, "VartoExVar.Key");
-	this->VartoExVar_Value.Read(pINI, pSection, "VartoExVar.Value");
-	this->VartoExVar_IsInt.Read(exINI, pSection, "VartoExVar.IsInt");
-	this->VartoExVar_Number.Read(exINI, pSection, "VartoExVar.Number");
 }
 
 template <typename T>
 void TechnoTypeExt::ExtData::Serialize(T& Stm)
 {
 	Stm
-		.Process(this->ExVartoVar)
-		.Process(this->ExVartoVar_File)
-		.Process(this->ExVartoVar_Section)
-		.Process(this->ExVartoVar_Key)
-		.Process(this->ExVartoVar_SW)
-
-		.Process(this->VartoExVar)
-		.Process(this->VartoExVar_File)
-		.Process(this->VartoExVar_Section)
-		.Process(this->VartoExVar_Key)
-		.Process(this->VartoExVar_Value)
-		.Process(this->VartoExVar_IsInt)
-		.Process(this->VartoExVar_Number)
 		;
 }
 void TechnoTypeExt::ExtData::LoadFromStream(PhobosStreamReader& Stm)

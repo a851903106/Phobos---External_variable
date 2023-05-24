@@ -3,33 +3,6 @@
 template<> const DWORD Extension<TechnoClass>::Canary = 0x55555555;
 TechnoExt::ExtContainer TechnoExt::ExtMap;
 
-void TechnoExt::ExtData::DeleteSelf()
-{
-	const auto pThis = this->OwnerObject();
-
-	pThis->Limbo();
-	pThis->UnInit();
-}
-
-void TechnoExt::ExtData::FireSuperWeapon(SuperWeaponTypeClass* pSWType, HouseClass* pHouse, CoordStruct coords)
-{
-	if (const auto pSuper = pHouse->Supers.GetItem(SuperWeaponTypeClass::Array->FindItemIndex(pSWType)))
-	{
-		const auto cell = CellClass::Coord2Cell(coords);
-		int oldstart = pSuper->RechargeTimer.StartTime;
-		int oldleft = pSuper->RechargeTimer.TimeLeft;
-		const auto MouseIdx = Unsorted::CurrentSWType.get();
-
-		pSuper->SetReadiness(true);
-		pSuper->Launch(cell, true);
-		pSuper->Reset();
-
-		Unsorted::CurrentSWType = MouseIdx;
-		pSuper->RechargeTimer.StartTime = oldstart;
-		pSuper->RechargeTimer.TimeLeft = oldleft;
-	}
-}
-
 // =============================
 // load / save
 

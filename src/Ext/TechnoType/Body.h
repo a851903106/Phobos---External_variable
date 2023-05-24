@@ -16,34 +16,7 @@ public:
 	class ExtData final : public Extension<TechnoTypeClass>
 	{
 	public:
-		Valueable<bool> ExVartoVar;
-		PhobosFixedString<32U> ExVartoVar_File;
-		PhobosFixedString<32U> ExVartoVar_Section;
-		PhobosFixedString<32U> ExVartoVar_Key;
-		std::vector<SuperWeaponTypeClass*> ExVartoVar_SW;
-
-		Valueable<bool> VartoExVar;
-		PhobosFixedString<32U> VartoExVar_File;
-		PhobosFixedString<32U> VartoExVar_Section;
-		PhobosFixedString<32U> VartoExVar_Key;
-		PhobosFixedString<32U> VartoExVar_Value;
-		Valueable<bool> VartoExVar_IsInt;
-		Valueable<int> VartoExVar_Number;
-
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject)
-			, ExVartoVar { false }
-			, ExVartoVar_File { nullptr }
-			, ExVartoVar_Section { nullptr }
-			, ExVartoVar_Key { nullptr }
-			, ExVartoVar_SW {}
-
-			, VartoExVar { false }
-			, VartoExVar_File { nullptr }
-			, VartoExVar_Section { nullptr }
-			, VartoExVar_Key { nullptr }
-			, VartoExVar_Value { nullptr }
-			, VartoExVar_IsInt { false }
-			, VartoExVar_Number { 0 }
 		{ }
 
 		virtual ~ExtData() = default;
