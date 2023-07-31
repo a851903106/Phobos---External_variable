@@ -18,39 +18,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Ext\TechnoType\Body.cpp" />
-    <ClCompile Include="src\Ext\Techno\Body.cpp" />
-    <ClCompile Include="src\Ext\Techno\Hooks.cpp" />
-    <ClCompile Include="src\Utilities\Debug.cpp" />
-    <ClCompile Include="src\Utilities\Stream.cpp" />
-    <ClCompile Include="src\Utilities\Swizzle.cpp" />
-    <ClCompile Include="src\Phobos.cpp" />
-    <ClCompile Include="src\Phobos.CRT.cpp" />
-    <ClCompile Include="src\Phobos.Ext.cpp" />
-    <ClCompile Include="src\Utilities\Constructs.cpp" />
-    <ClCompile Include="src\Utilities\EnumFunctions.cpp" />
-    <ClCompile Include="src\Utilities\GeneralUtils.cpp" />
-    <ClCompile Include="YRpp\StaticInits.cpp" />
-    <ClCompile Include="src\Utilities\Patch.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\Commands\NextTeam.h" />
-    <ClInclude Include="src\resource.h" />
-    <ClInclude Include="src\Utilities\Enumerable.h" />
-    <ClInclude Include="src\Ext\TechnoType\Body.h" />
-    <ClInclude Include="src\Ext\Techno\Body.h" />
-    <ClInclude Include="src\Utilities\Savegame.h" />
-    <ClInclude Include="src\Utilities\SavegameDef.h" />
-    <ClInclude Include="src\Utilities\Stream.h" />
-    <ClInclude Include="src\Utilities\Swizzle.h" />
+    <ClInclude Include="src\Ext\Anim\Body.h" />
+    <ClInclude Include="src\Ext\TAction\Body.h" />
     <ClInclude Include="src\Phobos.CRT.h" />
+    <ClInclude Include="src\Phobos.h" />
     <ClInclude Include="src\Phobos.version.h" />
     <ClInclude Include="src\Utilities\Concepts.h" />
     <ClInclude Include="src\Utilities\Constructs.h" />
     <ClInclude Include="src\Utilities\Container.h" />
     <ClInclude Include="src\Utilities\Debug.h" />
-    <ClInclude Include="src\Phobos.h" />
     <ClInclude Include="src\Utilities\Enum.h" />
+    <ClInclude Include="src\Utilities\Enumerable.h" />
     <ClInclude Include="src\Utilities\EnumFunctions.h" />
     <ClInclude Include="src\Utilities\GeneralUtils.h" />
     <ClInclude Include="src\Utilities\Helpers.Alex.h" />
@@ -59,9 +38,29 @@
     <ClInclude Include="src\Utilities\Macro.h" />
     <ClInclude Include="src\Utilities\Parser.h" />
     <ClInclude Include="src\Utilities\Patch.h" />
+    <ClInclude Include="src\Utilities\Savegame.h" />
+    <ClInclude Include="src\Utilities\SavegameDef.h" />
+    <ClInclude Include="src\Utilities\Stream.h" />
+    <ClInclude Include="src\Utilities\Swizzle.h" />
     <ClInclude Include="src\Utilities\Template.h" />
     <ClInclude Include="src\Utilities\TemplateDef.h" />
     <ClInclude Include="YRpp\GameTextManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Ext\Anim\Body.cpp" />
+    <ClCompile Include="src\Ext\TAction\Body.cpp" />
+    <ClCompile Include="src\Ext\TAction\Hooks.cpp" />
+    <ClCompile Include="src\Misc\RetryDialog.cpp" />
+    <ClCompile Include="src\Phobos.cpp" />
+    <ClCompile Include="src\Phobos.CRT.cpp" />
+    <ClCompile Include="src\Phobos.Ext.cpp" />
+    <ClCompile Include="src\Utilities\Constructs.cpp" />
+    <ClCompile Include="src\Utilities\Debug.cpp" />
+    <ClCompile Include="src\Utilities\EnumFunctions.cpp" />
+    <ClCompile Include="src\Utilities\GeneralUtils.cpp" />
+    <ClCompile Include="src\Utilities\Patch.cpp" />
+    <ClCompile Include="src\Utilities\Stream.cpp" />
+    <ClCompile Include="src\Utilities\Swizzle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\version.rc" />
@@ -71,7 +70,7 @@
     <ProjectGuid>{3FAF7126-F38C-4D1E-9973-C21A37870F60}</ProjectGuid>
     <RootNamespace>Phobos</RootNamespace>
     <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
-    <ProjectName>Variable</ProjectName>
+    <ProjectName>Actions</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

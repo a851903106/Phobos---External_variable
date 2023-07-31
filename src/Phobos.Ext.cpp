@@ -1,9 +1,10 @@
 #include <Phobos.h>
 
-#include <Ext/Techno/Body.h>
-#include <Ext/TechnoType/Body.h>
+#include <Ext/Anim/Body.h>
+#include <Ext/TAction/Body.h>
 
 #include <utility>
+#include <Helpers/Macro.h>
 
 #pragma region Implementation details
 
@@ -199,9 +200,10 @@ private:
 // Add more class names as you like
 auto MassActions = MassAction <
 	// Ext classes
-	TechnoExt,
-	TechnoTypeExt
-> ();
+	AnimExt,
+	TActionExt
+	// other classes
+>();
 
 DEFINE_HOOK(0x7258D0, AnnounceInvalidPointer, 0x6)
 {
@@ -231,22 +233,101 @@ void Phobos::PointerGotInvalid(AbstractClass* const pInvalid, bool const removed
 
 HRESULT Phobos::SaveGameData(IStream* pStm)
 {
-	//Debug::Log("Saving global Phobos data\n");
+	Debug::Log("Saving global Phobos data\n");
 
 	if (!MassActions.Save(pStm))
 		return E_FAIL;
 
-	//Debug::Log("Finished saving the game\n");
+	Debug::Log("Finished saving the game\n");
 
 	return S_OK;
 }
 
 void Phobos::LoadGameData(IStream* pStm)
 {
-	//Debug::Log("Loading global Phobos data\n");
+	Debug::Log("Loading global Phobos data\n");
 
-	//if (!MassActions.Load(pStm))
-		//Debug::Log("Error loading the game\n");
-	//else
-		//Debug::Log("Finished loading the game\n");
+	if (!MassActions.Load(pStm))
+		Debug::Log("Error loading the game\n");
+	else
+		Debug::Log("Finished loading the game\n");
 }
+
+#ifdef DEBUG
+
+#pragma warning (disable : 4091)
+#pragma warning (disable : 4245)
+
+#include <Dbghelp.h>
+#include <tlhelp32.h>
+
+bool Phobos::DetachFromDebugger()
+{
+	auto GetDebuggerProcessId = [](DWORD dwSelfProcessId) -> DWORD
+	{
+		DWORD dwParentProcessId = -1;
+		HANDLE hSnapshot = CreateToolhelp32Snapshot(2, 0);
+		PROCESSENTRY32 pe32;
+		pe32.dwSize = sizeof(PROCESSENTRY32);
+		Process32First(hSnapshot, &pe32);
+		do
+		{
+			if (pe32.th32ProcessID == dwSelfProcessId)
+			{
+				dwParentProcessId = pe32.th32ParentProcessID;
+				break;
+			}
+		}
+		while (Process32Next(hSnapshot, &pe32));
+		CloseHandle(hSnapshot);
+		return dwParentProcessId;
+	};
+
+	HMODULE hModule = LoadLibrary("ntdll.dll");
+	if (hModule != NULL)
+	{
+		auto const NtRemoveProcessDebug =
+			(NTSTATUS(__stdcall*)(HANDLE, HANDLE))GetProcAddress(hModule, "NtRemoveProcessDebug");
+		auto const NtSetInformationDebugObject =
+			(NTSTATUS(__stdcall*)(HANDLE, ULONG, PVOID, ULONG, PULONG))GetProcAddress(hModule, "NtSetInformationDebugObject");
+		auto const NtQueryInformationProcess =
+			(NTSTATUS(__stdcall*)(HANDLE, ULONG, PVOID, ULONG, PULONG))GetProcAddress(hModule, "NtQueryInformationProcess");
+		auto const NtClose =
+			(NTSTATUS(__stdcall*)(HANDLE))GetProcAddress(hModule, "NtClose");
+
+		HANDLE hDebug;
+		HANDLE hCurrentProcess = GetCurrentProcess();
+		NTSTATUS status = NtQueryInformationProcess(hCurrentProcess, 30, &hDebug, sizeof(HANDLE), 0);
+		if (0 <= status)
+		{
+			ULONG killProcessOnExit = FALSE;
+			status = NtSetInformationDebugObject(
+				hDebug,
+				1,
+				&killProcessOnExit,
+				sizeof(ULONG),
+				NULL
+			);
+			if (0 <= status)
+			{
+				const auto pid = GetDebuggerProcessId(GetProcessId(hCurrentProcess));
+				status = NtRemoveProcessDebug(hCurrentProcess, hDebug);
+				if (0 <= status)
+				{
+					HANDLE hDbgProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+					if (INVALID_HANDLE_VALUE != hDbgProcess)
+					{
+						BOOL ret = TerminateProcess(hDbgProcess, EXIT_SUCCESS);
+						CloseHandle(hDbgProcess);
+						return ret;
+					}
+				}
+			}
+			NtClose(hDebug);
+		}
+		FreeLibrary(hModule);
+	}
+
+	return false;
+}
+#endif

@@ -47,13 +47,6 @@ public:
 		return Array.back().get();
 	}
 
-	static T* Allocate(const char* Title)
-	{
-		Array.push_back(std::make_unique<T>(Title));
-
-		return Array.back().get();
-	}
-
 	static void Clear()
 	{
 		Array.clear();
@@ -72,27 +65,6 @@ public:
 
 		for (const auto& item : Array)
 			item->LoadFromINI(pINI);
-	}
-
-	static void LoadFromINIList(CCINIClass* pINI,const char* pSection,const char* pKey)
-	{
-		if (pINI->ReadString(pSection, pKey, "", Phobos::readBuffer))
-		{
-			if (T* iteam = Find(Phobos::readBuffer))
-				return;
-
-			T* iteam = Allocate(Phobos::readBuffer);
-			iteam->LoadFromINI(pINI);
-		}
-	}
-
-	static void LoadFromINIList(CCINIClass* pINI,const char* pValue)
-	{
-		if (T* iteam = Find(pValue))
-			return;
-
-		T* iteam = Allocate(pValue);
-		iteam->LoadFromINI(pINI);
 	}
 
 	static bool LoadGlobals(PhobosStreamReader& Stm)

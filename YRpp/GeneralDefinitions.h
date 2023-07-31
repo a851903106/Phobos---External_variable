@@ -245,6 +245,7 @@ enum class TextPrintType : int
 	LightShadow = 0x80,
 	Center = 0x100,
 	Right = 0x200,
+	Background = 0x400,
 	MediumColor = 0x1000,
 	BrightColor = 0x2000,
 	UseGradPal = 0x4000,
@@ -253,7 +254,7 @@ enum class TextPrintType : int
 };
 MAKE_ENUM_FLAGS(TextPrintType);
 
-enum class TriggerPersistance : unsigned int
+enum class TriggerPersistence : unsigned int
 {
 	Volatile = 0, // trigger for the first object whose events fired, then disable
 	SemiPersistant = 1, // trigger after all object's events fired, then disable

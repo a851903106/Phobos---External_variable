@@ -12,39 +12,35 @@
 #include <Utilities/Patch.h>
 #include <Utilities/Macro.h>
 
+int Phobos::FlyStarAndSTSTL = 0;
+bool Phobos::SelectBox = false;
 HANDLE Phobos::hInstance = 0;
 
 char Phobos::readBuffer[Phobos::readLength];
 wchar_t Phobos::wideBuffer[Phobos::readLength];
 const char Phobos::readDelims[4] = ",";
 
-CCINIClass* Phobos::OpenConfig(const char* file)
+void Phobos::CmdLineParse(char** ppArgs, int nNumArgs)
 {
-	CCINIClass* pINI = GameCreate<CCINIClass>();
-
-	if (pINI)
+	// > 1 because the exe path itself counts as an argument, too!
+	for (int i = 1; i < nNumArgs; i++)
 	{
-		CCFileClass* cfg = GameCreate<CCFileClass>(file);
+		const char* pArg = ppArgs[i];
 
-		if (cfg)
+		if (_stricmp(pArg, "-Phobos") == 0)
 		{
-			if (cfg->Exists())
-			{
-				pINI->ReadCCFile(cfg);
-			}
-			GameDelete(cfg);
+			Phobos::FlyStarAndSTSTL++;
 		}
-	}
 
-	return pINI;
-}
+		if (_stricmp(pArg, "-FlyStar") == 0)
+		{
+			Phobos::FlyStarAndSTSTL++;
+		}
 
-void Phobos::CloseConfig(CCINIClass*& pINI)
-{
-	if (pINI)
-	{
-		GameDelete(pINI);
-		pINI = nullptr;
+		if (_stricmp(pArg, "-STSTL") == 0)
+		{
+			Phobos::FlyStarAndSTSTL++;
+		}
 	}
 }
 
@@ -92,3 +88,13 @@ void NAKED _ExeTerminate()
 	__asm {jmp ebx};
 }
 DEFINE_JUMP(LJMP, 0x7CD8EA, GET_OFFSET(_ExeTerminate));
+
+DEFINE_HOOK(0x52F639, _YR_CmdLineParse, 0x5)
+{
+	GET(char**, ppArgs, ESI);
+	GET(int, nNumArgs, EDI);
+
+	Phobos::CmdLineParse(ppArgs, nNumArgs);
+
+	return 0;
+}

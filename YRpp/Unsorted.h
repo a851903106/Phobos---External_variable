@@ -35,6 +35,7 @@ public:
 	static constexpr reference<bool, 0xA8E9A0u> const IsActive{};
 	static constexpr reference<bool, 0xA8ED80u> const IsFocused{};
 	static constexpr reference<int, 0xA8EDA0u> const SpecialDialog{};
+	static constexpr reference<bool, 0xB04880u> const EnableMPSyncDebug{};
 
 	// the game's own rounding function
 	// infamous for true'ing (F2I(-5.00) == -4.00)

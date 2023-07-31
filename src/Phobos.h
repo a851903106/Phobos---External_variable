@@ -5,17 +5,12 @@
 class CCINIClass;
 class AbstractClass;
 
-constexpr auto NONE_STR = "<none>";
-constexpr auto NONE_STR2 = "none";
-constexpr auto TOOLTIPS_SECTION = "ToolTips";
-constexpr auto SIDEBAR_SECTION = "Sidebar";
-
 class Phobos
 {
 public:
-	static CCINIClass* OpenConfig(const char*);
-	static void CloseConfig(CCINIClass*&);
-
+	static int FlyStarAndSTSTL;
+	static bool SelectBox;
+	static void Phobos::CmdLineParse(char** ppArgs, int nNumArgs);
 	static void ExeRun();
 	static void ExeTerminate();
 
@@ -27,6 +22,9 @@ public:
 	static wchar_t wideBuffer[readLength];
 	static const char readDelims[4];
 
+#ifdef DEBUG
+	static bool DetachFromDebugger();
+#endif
 	static void Clear();
 	static void PointerGotInvalid(AbstractClass* const pInvalid, bool const removed);
 	static HRESULT SaveGameData(IStream* pStm);

@@ -10,6 +10,17 @@ class ObjectClass;
 class WarheadTypeClass;
 class WeaponTypeClass;
 
+// Terrain ground type
+class GroundType
+{
+public:
+	static constexpr reference<GroundType, 0x89EA40u, 12u> const Array {};
+
+	//Properties
+	float Cost[8];  // Terrain speed multipliers.
+	bool Buildable; // Can build on this terrain?
+};
+
 //Powerup crates
 class Crate
 {
@@ -354,6 +365,9 @@ public:
 
 	bool CoordinatesLegal(const CellStruct& cell) const
 		{ JMP_THIS(0x568300); }
+
+	bool IsLinkedBridgeDestroyed(const CellStruct& cell) const
+		{ JMP_THIS(0x587410); }
 
 // ====================================
 //         FIRESTORM RELATED

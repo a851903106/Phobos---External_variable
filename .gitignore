@@ -21,3 +21,5 @@ docs/locale/.doctrees/
 /.vscode/c_cpp_properties.json
 /.vscode/cspell.json
 /.vscode/settings.json
+/.github
+/.vscode
