@@ -18,7 +18,8 @@ enum class PhobosTriggerAction : unsigned int
 	FireSuperWeapon = 50000,
 	CreateAnimation = 50001,
 	DeleteAnimation = 50002,
-	SelectBox = 50003
+	SelectBox = 50003,
+	SetSuperWeaponTimer = 50004
 };
 
 class TActionExt
@@ -59,6 +60,7 @@ public:
 	ACTION_FUNC(CreateAnimation);
 	ACTION_FUNC(DeleteAnimation);
 	ACTION_FUNC(SelectBox);
+	ACTION_FUNC(SetSuperWeaponTimer);
 
 	static void ClearManager(TechnoClass* pThis);
 

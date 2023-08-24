@@ -66,6 +66,8 @@ bool TActionExt::Execute(TActionClass* pThis, HouseClass* pHouse, ObjectClass* p
 		return TActionExt::DeleteAnimation(pThis, pHouse, pObject, pTrigger, location);
 	case PhobosTriggerAction::SelectBox:
 		return TActionExt::SelectBox(pThis, pHouse, pObject, pTrigger, location);
+	case PhobosTriggerAction::SetSuperWeaponTimer:
+		return TActionExt::SetSuperWeaponTimer(pThis, pHouse, pObject, pTrigger, location);
 	default:
 		bHandled = false;
 		return true;
@@ -365,6 +367,51 @@ bool TActionExt::SelectBox(TActionClass* pThis, HouseClass* pHouse, ObjectClass*
 	pSuper->Reset();
 	pSuper->RechargeTimer.StartTime = oldstart;
 	pSuper->RechargeTimer.TimeLeft = oldleft;
+
+	return true;
+}
+
+bool TActionExt::SetSuperWeaponTimer(TActionClass* pThis, HouseClass* pHouse, ObjectClass* pObject, TriggerClass* pTrigger, CellStruct const& location)
+{
+	auto pSWType = SuperWeaponTypeClass::Find(pThis->Text);
+
+	if (!pSWType)
+		pSWType = SuperWeaponTypeClass::Array()->GetItem(atoi(pThis->Text));
+
+	if (!pSWType)
+		return true;
+
+	HouseClass* vHouse = pHouse;
+	if (pThis->Param3 >= 0)
+	{
+		if (HouseClass::Index_IsMP(pThis->Param3))
+			vHouse = HouseClass::FindByIndex(pThis->Param3);
+		else
+			vHouse = HouseClass::FindByCountryIndex(pThis->Param3);
+	}
+
+	if (!vHouse)
+		return true;
+
+	SuperClass* pSuper = vHouse->Supers.GetItem(pSWType->GetArrayIndex());
+
+
+	int oldstart = pSuper->RechargeTimer.StartTime;
+	int oldleft = pSuper->RechargeTimer.TimeLeft + pThis->Param4;
+	if (oldleft < 0)
+		oldleft = 0;
+
+	pSuper->Reset();
+
+	if (pThis->Param5)
+	{
+		pSuper->SetRechargeTime(oldleft);
+	}
+	else
+	{
+		pSuper->RechargeTimer.StartTime = oldstart;
+		pSuper->RechargeTimer.TimeLeft = oldleft;
+	}
 
 	return true;
 }
